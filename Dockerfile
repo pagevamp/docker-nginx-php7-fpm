@@ -68,19 +68,7 @@ ADD conf/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 # Fix socket file
 RUN mkdir -p /run/php/ && chown -Rf www-data.www-data /run/php
 
-# Start Supervisord
+# Add Supervisord script
 ADD scripts/start.sh /start.sh
 RUN chmod 755 /start.sh
 
-# Setup Volume
-VOLUME ["/var/www"]
-
-# add test PHP file
-ADD src/index.php /var/www/index.php
-RUN chown -Rf www-data.www-data /var/www/
-WORKDIR /var/www
-
-# Expose Port
-EXPOSE 80
-
-ENTRYPOINT ["/bin/bash","/start.sh","-c"]
