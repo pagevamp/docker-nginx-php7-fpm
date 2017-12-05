@@ -42,10 +42,10 @@ sed -i -e "s/memory_limit\s*=\s*128M/memory_limit = 256M/g" /etc/php/7.0/fpm/php
 sed -i -e "s/post_max_size\s*=\s*8M/post_max_size = 100M/g" /etc/php/7.0/fpm/php.ini && \
 sed -i -e "s/;daemonize\s*=\s*yes/daemonize = no/g" /etc/php/7.0/fpm/php-fpm.conf && \
 sed -i -e "s/;catch_workers_output\s*=\s*yes/catch_workers_output = yes/g" /etc/php/7.0/fpm/pool.d/www.conf && \
-sed -i -e "s/pm.max_children = 5/pm.max_children = 9/g" /etc/php/7.0/fpm/pool.d/www.conf && \
-sed -i -e "s/pm.start_servers = 2/pm.start_servers = 3/g" /etc/php/7.0/fpm/pool.d/www.conf && \
-sed -i -e "s/pm.min_spare_servers = 1/pm.min_spare_servers = 2/g" /etc/php/7.0/fpm/pool.d/www.conf && \
-sed -i -e "s/pm.max_spare_servers = 3/pm.max_spare_servers = 4/g" /etc/php/7.0/fpm/pool.d/www.conf && \
+sed -i -e "s/pm.max_children = 5/pm.max_children = 30/g" /etc/php/7.0/fpm/pool.d/www.conf && \
+sed -i -e "s/pm.start_servers = 2/pm.start_servers = 14/g" /etc/php/7.0/fpm/pool.d/www.conf && \
+sed -i -e "s/pm.min_spare_servers = 1/pm.min_spare_servers = 10/g" /etc/php/7.0/fpm/pool.d/www.conf && \
+sed -i -e "s/pm.max_spare_servers = 3/pm.max_spare_servers = 18/g" /etc/php/7.0/fpm/pool.d/www.conf && \
 sed -i -e "s/pm.max_requests = 500/pm.max_requests = 200/g" /etc/php/7.0/fpm/pool.d/www.conf && \
 sed -e 's/;clear_env = no/clear_env = no/' -i /etc/php/7.0/fpm/pool.d/www.conf
 
