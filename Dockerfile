@@ -28,12 +28,8 @@ echo -n > /var/lib/apt/extended_states && \
 rm -rf /var/lib/apt/lists/* && \
 rm -rf /usr/share/man/?? && \
 rm -rf /usr/share/man/??_*
-# tweak nginx config
-RUN sed -i -e"s/worker_processes  1/worker_processes 5/" /etc/nginx/nginx.conf && \
-sed -i -e"s/keepalive_timeout 65/keepalive_timeout 120;\n\tclient_max_body_size 100m/" /etc/nginx/nginx.conf && \
-echo "daemon off;" >> /etc/nginx/nginx.conf
-# tweak php-fpm config
 
+# tweak php-fpm config
 RUN sed -i -e "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g" /etc/php/7.0/fpm/php.ini && \
 sed -i -e "s/max_input_time\s*=\s*60/max_input_time = 300/g" /etc/php/7.0/fpm/php.ini && \
 sed -i -e "s/max_execution_time\s*=\s*30/max_execution_time = 300/g" /etc/php/7.0/fpm/php.ini && \
@@ -62,6 +58,7 @@ rm -Rf /etc/nginx/sites-available/default && \
 rm -Rf /etc/nginx/sites-enabled/default && \
 mkdir -p /etc/nginx/ssl/
 ADD conf/nginx-site.conf /etc/nginx/sites-available/default
+ADD conf/nginx.conf /etc/nginx/nginx.conf
 RUN ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 
 # Supervisor Config
