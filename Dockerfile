@@ -16,7 +16,7 @@ nginx=stable && \
 add-apt-repository ppa:nginx/$nginx && \
 apt-get update && \
 apt-get upgrade -y && \
-BUILD_PACKAGES="wget vim supervisor nginx php7.0-fpm git php7.0-mysql php7.0-curl php7.0-gd php7.0-intl php7.0-mcrypt php7.0-sqlite php7.0-tidy php7.0-xmlrpc php7.0-xsl php7.0-pgsql php7.0-ldap pwgen unzip php7.0-zip curl php-mbstring php-mongodb" && \
+BUILD_PACKAGES="wget vim supervisor nginx php7.0-fpm git php7.0-mysql php7.0-curl php7.0-gd php7.0-intl php7.0-mcrypt php7.0-sqlite php7.0-tidy php7.0-xmlrpc php7.0-xsl php7.0-pgsql php7.0-ldap pwgen unzip php7.0-zip curl php-mbstring php-mongodb cron" && \
 apt-get -y install $BUILD_PACKAGES && \
 curl -sS https://getcomposer.org/installer -o composer-setup.php && \
 php composer-setup.php --install-dir=/usr/local/bin --filename=composer && \
