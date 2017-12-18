@@ -15,7 +15,7 @@ apt-get install -y software-properties-common && \
 apt-add-repository -y ppa:ondrej/php && \
 apt-get update && \
 apt-get upgrade -y && \
-BUILD_PACKAGES="supervisor nginx php5.6-fpm git php5.6-mysql php5.6-curl php5.6-gd php5.6-intl php5.6-mcrypt php5.6-sqlite php5.6-tidy php5.6-xmlrpc php5.6-xsl php5.6-pgsql php5.6-ldap pwgen unzip php5.6-zip curl php5.6-mbstring php5.6-mongodb" && \
+BUILD_PACKAGES="supervisor nginx php5.6-fpm git php5.6-mysql php5.6-curl php5.6-gd php5.6-intl php5.6-mcrypt php5.6-sqlite php5.6-tidy php5.6-xmlrpc php5.6-xsl php5.6-pgsql php5.6-ldap pwgen unzip php5.6-zip curl php5.6-mbstring php5.6-mongodb vim" && \
 apt-get -y install $BUILD_PACKAGES && \
 curl -sS https://getcomposer.org/installer -o composer-setup.php && \
 php composer-setup.php --install-dir=/usr/local/bin --filename=composer && \
