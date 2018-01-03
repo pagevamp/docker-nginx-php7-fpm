@@ -34,6 +34,7 @@ echo "daemon off;" >> /etc/nginx/nginx.conf
 # tweak php-fpm config
 RUN sed -i -e "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g" /etc/php/5.6/fpm/php.ini && \
 sed -i -e "s/upload_max_filesize\s*=\s*2M/upload_max_filesize = 100M/g" /etc/php/5.6/fpm/php.ini && \
+sed -i -e "s/max_execution_time\s*=\s*30/max_execution_time = 120/g" /etc/php/5.6/fpm/php.ini && \
 sed -i -e "s/memory_limit\s*=\s*128M/memory_limit = 256M/g" /etc/php/5.6/fpm/php.ini && \
 sed -i -e "s/post_max_size\s*=\s*8M/post_max_size = 100M/g" /etc/php/5.6/fpm/php.ini && \
 sed -i -e "s/;daemonize\s*=\s*yes/daemonize = no/g" /etc/php/5.6/fpm/php-fpm.conf && \
