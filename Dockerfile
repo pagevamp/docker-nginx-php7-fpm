@@ -16,7 +16,7 @@ nginx=stable && \
 add-apt-repository ppa:nginx/$nginx && \
 apt-get update && \
 apt-get upgrade -y && \
-BUILD_PACKAGES="wget supervisor vim nginx git pwgen unzip curl" && \
+BUILD_PACKAGES="wget supervisor vim nginx git pwgen unzip curl apt-transport-https bzip2" && \
 apt-get -y install $BUILD_PACKAGES && \
 apt-get remove --purge -y software-properties-common && \
 apt-get autoremove -y && \
@@ -39,9 +39,6 @@ RUN ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 # Supervisor Config
 ADD conf/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-# Add Supervisord script
-ADD scripts/start.sh /start.sh
-
 # Install npm,yarn
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 ENV NVM_DIR /usr/local/nvm
@@ -49,10 +46,8 @@ ENV NODE_VERSION 8.9.4
 
 # install nvm
 # https://github.com/creationix/nvm#install-script
-RUN curl --silent -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | bash
-
-# install node and npm
-RUN source $NVM_DIR/nvm.sh \
+RUN curl --silent -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | bash \
+	&& source $NVM_DIR/nvm.sh \
     && nvm install $NODE_VERSION \
     && nvm alias default $NODE_VERSION \
     && nvm use default
@@ -61,8 +56,10 @@ RUN source $NVM_DIR/nvm.sh \
 ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
 ENV PATH $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 
-RUN apt-get update && apt-get install apt-transport-https && curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
-	&& echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \ && apt-get update && apt-get install -y yarn bzip2
+RUN apt-get update && curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
+	&& echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \ && apt-get update && apt-get install -y yarn 
+
+# Add Supervisord script
+ADD scripts/start.sh /start.sh
 
 RUN chmod 755 /start.sh
-
