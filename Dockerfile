@@ -17,7 +17,7 @@ add-apt-repository ppa:nginx/$nginx && \
 apt-get update && \
 apt-get upgrade -y && \
 BUILD_PACKAGES="wget supervisor vim nginx git pwgen unzip curl" && \
-apt-get -y install $BUILD_PACKAGES
+apt-get -y install $BUILD_PACKAGES && \
 apt-get remove --purge -y software-properties-common && \
 apt-get autoremove -y && \
 apt-get clean && \
