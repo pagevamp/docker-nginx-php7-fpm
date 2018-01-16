@@ -77,7 +77,30 @@ RUN wget -O - https://download.newrelic.com/548C16BF.gpg | apt-key add - \
   && apt-get install -y newrelic-php5 \
   && newrelic-install install \
   && rm -rf /var/lib/apt/lists/*
+
+# Install npm,yarn
+RUN rm /bin/sh && ln -s /bin/bash /bin/sh
+ENV NVM_DIR /usr/local/nvm
+ENV NODE_VERSION 8.9.4
+
+# install nvm
+# https://github.com/creationix/nvm#install-script
+RUN curl --silent -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | bash
+
+# install node and npm
+RUN source $NVM_DIR/nvm.sh \
+    && nvm install $NODE_VERSION \
+    && nvm alias default $NODE_VERSION \
+    && nvm use default
+
+# add node and npm to path so the commands are available
+ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
+ENV PATH $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
+
+RUN apt-get update && apt-get install apt-transport-https && curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
+	&& echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \ && apt-get update && apt-get install -y yarn bzip2
+
+
 ADD conf/newrelic.ini /etc/php/7.0/fpm/conf.d/newrelic.ini
 
 RUN chmod 755 /start.sh
-
