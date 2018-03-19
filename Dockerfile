@@ -59,7 +59,9 @@ rm -Rf /etc/nginx/sites-enabled/default && \
 mkdir -p /etc/nginx/ssl/
 ADD conf/nginx-site.conf /etc/nginx/sites-available/default
 ADD conf/nginx.conf /etc/nginx/nginx.conf
-RUN ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+RUN ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default && \
+	ln -sf /dev/stdout /var/log/php7.0-fpm.log && \
+	ln -sf /dev/stderr /var/log/nginx/error.log
 
 # Supervisor Config
 ADD conf/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
@@ -71,13 +73,13 @@ RUN mkdir -p /run/php/ && chown -Rf www-data.www-data /run/php
 ADD scripts/start.sh /start.sh
 
 # Add newrelic
-RUN wget -O - https://download.newrelic.com/548C16BF.gpg | apt-key add - \
-  && echo "deb http://apt.newrelic.com/debian/ newrelic non-free" > /etc/apt/sources.list.d/newrelic.list \
-  && apt-get update \
-  && apt-get install -y newrelic-php5 \
-  && newrelic-install install \
-  && rm -rf /var/lib/apt/lists/*
-ADD conf/newrelic.ini /etc/php/7.0/fpm/conf.d/newrelic.ini
+# RUN wget -O - https://download.newrelic.com/548C16BF.gpg | apt-key add - \
+#  && echo "deb http://apt.newrelic.com/debian/ newrelic non-free" > /etc/apt/sources.list.d/newrelic.list \
+#  && apt-get update \
+#  && apt-get install -y newrelic-php5 \
+#  && newrelic-install install \
+#  && rm -rf /var/lib/apt/lists/*
+#ADD conf/newrelic.ini /etc/php/7.0/fpm/conf.d/newrelic.ini
 
 RUN chmod 755 /start.sh
 
