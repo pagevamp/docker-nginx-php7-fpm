@@ -55,10 +55,10 @@ RUN phpenmod mcrypt && \
 	mkdir -p /etc/nginx/ssl/ && \
 	mkdir -p /run/php/ && chown -Rf www-data.www-data /run/php
 
-ADD conf/nginx-site.conf /etc/nginx/sites-available/default && \
-	conf/nginx.conf /etc/nginx/nginx.conf && \
-	conf/supervisord.conf /etc/supervisor/conf.d/supervisord.conf && \
-	scripts/start.sh /start.sh
+ADD conf/nginx-site.conf /etc/nginx/sites-available/default
+ADD	conf/nginx.conf /etc/nginx/nginx.conf
+ADD	conf/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+ADD	scripts/start.sh /start.sh
 
 RUN ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default && \
 	ln -sf /dev/stdout /var/log/php7.0-fpm.log && \
