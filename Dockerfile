@@ -17,7 +17,7 @@ RUN apt-get update && \
 	add-apt-repository ppa:nginx/$nginx && \
 	apt-get update && \
 	apt-get upgrade -y && \
-	BUILD_PACKAGES="python-setuptools wget vim supervisor nginx php7.1-fpm git php7.1-mysql php7.1-curl php7.1-gd php7.1-intl php7.1-mcrypt php7.1-sqlite php7.1-tidy php7.1-xmlrpc php7.1-xsl php7.1-pgsql php7.1-ldap pwgen unzip php7.1-zip curl php-mbstring php-mongodb cron" && \
+	BUILD_PACKAGES="python-setuptools wget vim supervisor nginx php7.1-fpm git php7.1-mysql php7.1-curl php7.1-gd php7.1-intl php7.1-mcrypt php7.1-sqlite php7.1-tidy php7.1-xmlrpc php7.1-xsl php7.1-pgsql php7.1-ldap pwgen unzip php7.1-zip curl php7.1-mbstring php-mongodb cron" && \
 	apt-get -y install $BUILD_PACKAGES && \
 	curl -sS https://getcomposer.org/installer -o composer-setup.php && \
 	php composer-setup.php --install-dir=/usr/local/bin --filename=composer && \
