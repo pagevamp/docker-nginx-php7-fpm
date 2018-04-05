@@ -69,13 +69,12 @@ ADD conf/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 # add test PHP file
 ADD src/index.php /var/www/index.php
 
+ADD scripts/start.sh /start.sh
+
 # Fix permission
 RUN mkdir -p /run/php/ && chown -Rf www-data.www-data /run/php && \
 chmod 755 /start.sh && \
 chown -Rf www-data.www-data /var/www/
-
-# Start Supervisord
-ADD scripts/start.sh /start.sh
 
 # Setup Volume
 VOLUME ["/var/www"]
