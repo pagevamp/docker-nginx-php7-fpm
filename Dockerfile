@@ -16,10 +16,11 @@ nginx=stable && \
 add-apt-repository ppa:nginx/$nginx && \
 apt-get update && \
 apt-get upgrade -y && \
-BUILD_PACKAGES="supervisor nginx php7.0-fpm git php7.0-mysql php7.0-curl php7.0-gd php7.0-intl php7.0-mcrypt php7.0-sqlite php7.0-tidy php7.0-xmlrpc php7.0-xsl php7.0-pgsql php7.0-ldap pwgen unzip php7.0-zip curl php-mbstring php-mongodb" && \
+BUILD_PACKAGES="supervisor nginx php7.0-fpm git php7.0-mysql php7.0-curl php7.0-gd php7.0-intl php7.0-mcrypt php7.0-sqlite php7.0-tidy php7.0-xmlrpc php7.0-xsl php7.0-pgsql php7.0-ldap pwgen unzip php7.0-zip curl php-mbstring php-mongodb vim" && \
 apt-get -y install $BUILD_PACKAGES && \
 curl -sS https://getcomposer.org/installer -o composer-setup.php && \
 php composer-setup.php --install-dir=/usr/local/bin --filename=composer && \
+composer global require hirak/prestissimo && \
 apt-get remove --purge -y software-properties-common && \
 apt-get autoremove -y && \
 apt-get clean && \
@@ -65,19 +66,20 @@ RUN ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 # Supervisor Config
 ADD conf/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-# Fix socket file
-RUN mkdir -p /run/php/ && chown -Rf www-data.www-data /run/php
+# add test PHP file
+ADD src/index.php /var/www/index.php
+
+# Fix permission
+RUN mkdir -p /run/php/ && chown -Rf www-data.www-data /run/php && \
+chmod 755 /start.sh && \
+chown -Rf www-data.www-data /var/www/
 
 # Start Supervisord
 ADD scripts/start.sh /start.sh
-RUN chmod 755 /start.sh
 
 # Setup Volume
 VOLUME ["/var/www"]
 
-# add test PHP file
-ADD src/index.php /var/www/index.php
-RUN chown -Rf www-data.www-data /var/www/
 WORKDIR /var/www
 
 # Expose Port
