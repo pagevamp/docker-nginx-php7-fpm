@@ -18,6 +18,7 @@ RUN apt-get update && \
 	apt-get -y install $BUILD_PACKAGES && \
 	curl -sS https://getcomposer.org/installer -o composer-setup.php && \
 	php composer-setup.php --install-dir=/usr/local/bin --filename=composer && \
+	composer global require hirak/prestissimo && \
 	apt-get remove --purge -y software-properties-common && \
 	apt-get autoremove -y && \
 	apt-get clean && \
