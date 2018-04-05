@@ -17,10 +17,11 @@ RUN apt-get update && \
 	add-apt-repository ppa:nginx/$nginx && \
 	apt-get update && \
 	apt-get upgrade -y && \
-	BUILD_PACKAGES="python-setuptools wget vim supervisor nginx php7.1-fpm git php7.1-mysql php7.1-curl php7.1-gd php7.1-intl php7.1-mcrypt php7.1-sqlite php7.1-tidy php7.1-xmlrpc php7.1-xsl php7.1-pgsql php7.1-ldap pwgen unzip php7.1-zip curl php7.1-mbstring php-mongodb cron" && \
+	BUILD_PACKAGES="python-setuptools wget vim supervisor nginx php7.1-fpm php7.1-mysql php7.1-curl php7.1-gd php7.1-intl php7.1-mcrypt php7.1-sqlite php7.1-tidy php7.1-xmlrpc php7.1-xsl php7.1-pgsql php7.1-ldap pwgen unzip php7.1-zip curl php7.1-mbstring php-mongodb" && \
 	apt-get -y install $BUILD_PACKAGES && \
 	curl -sS https://getcomposer.org/installer -o composer-setup.php && \
 	php composer-setup.php --install-dir=/usr/local/bin --filename=composer && \
+	composer global require hirak/prestissimo && \
 	apt-get remove --purge -y software-properties-common && \
 	apt-get autoremove -y && \
 	apt-get clean && \
@@ -56,16 +57,15 @@ RUN phpenmod mcrypt && \
 	rm -Rf /etc/nginx/sites-available/default && \
 	rm -Rf /etc/nginx/sites-enabled/default && \
 	mkdir -p /etc/nginx/ssl/ && \
-	mkdir -p /run/php/ && chown -Rf www-data.www-data /run/php
+	mkdir -p /run/php/ && chown -Rf www-data.www-data /run/php && \
+	ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default && \
+	ln -sf /dev/stdout /var/log/php7.1-fpm.log && \
+	ln -sf /dev/stderr /var/log/nginx/error.log
 
 ADD conf/nginx-site.conf /etc/nginx/sites-available/default
 ADD	conf/nginx.conf /etc/nginx/nginx.conf
 ADD	conf/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 ADD	scripts/start.sh /start.sh
-
-RUN ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default && \
-	ln -sf /dev/stdout /var/log/php7.1-fpm.log && \
-	ln -sf /dev/stderr /var/log/nginx/error.log
 
 # Add newrelic
 # RUN wget -O - https://download.newrelic.com/548C16BF.gpg | apt-key add - \
