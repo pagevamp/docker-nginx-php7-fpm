@@ -58,7 +58,9 @@ rm -Rf /etc/nginx/sites-enabled/default && \
 mkdir -p /etc/nginx/ssl/
 ADD conf/nginx-site.conf /etc/nginx/sites-available/default
 ADD conf/nginx.conf /etc/nginx/nginx.conf
-RUN ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+RUN ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default && \
+    ln -sf /dev/stdout /var/log/php7.2-fpm.log && \
+	  ln -sf /dev/stderr /var/log/nginx/error.log
 
 # Supervisor Config
 ADD conf/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
