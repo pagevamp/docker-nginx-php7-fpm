@@ -67,14 +67,10 @@ RUN ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default &&
 # Add Supervisord script
 ADD scripts/start.sh /start.sh
 
-# # Add newrelic
-# RUN wget -O - https://download.newrelic.com/548C16BF.gpg | apt-key add - \
-#   && echo "deb http://apt.newrelic.com/debian/ newrelic non-free" > /etc/apt/sources.list.d/newrelic.list \
-#   && apt-get update \
-#   && apt-get install -y newrelic-php5 \
-#   && newrelic-install install \
-#   && rm -rf /var/lib/apt/lists/*
-# ADD conf/newrelic.ini /etc/php/7.2/fpm/conf.d/newrelic.ini
+WORKDIR /var/www
+
+# Expose Port
+EXPOSE 80
 
 RUN chmod 755 /start.sh
 ENTRYPOINT ["/bin/bash","/start.sh"]
