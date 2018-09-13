@@ -64,4 +64,7 @@ ADD scripts/start.sh /start.sh
 
 RUN chmod 755 /start.sh
 
+# Expose Port
+EXPOSE 80
+
 ENTRYPOINT ["/bin/bash","/start.sh"]
