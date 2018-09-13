@@ -63,3 +63,5 @@ RUN apt-get update && curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-ke
 ADD scripts/start.sh /start.sh
 
 RUN chmod 755 /start.sh
+
+ENTRYPOINT ["/bin/bash","/start.sh"]
