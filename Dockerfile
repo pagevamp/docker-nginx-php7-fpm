@@ -84,6 +84,7 @@ COPY ./src/index.php /var/www/
 # Add Scripts
 ADD ./scripts/start.sh /start.sh
 ADD ./conf/nginx.conf /etc/nginx/nginx.conf
+WORKDIR /var/www
 EXPOSE 80
 
 CMD ["/start.sh"]
