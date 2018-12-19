@@ -53,14 +53,16 @@ RUN apt-get update \
     && rm -rf /etc/nginx/conf.d/* \
     && sed -i -e "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g" ${php_conf} \
     && sed -i -e "s/memory_limit\s*=\s*.*/memory_limit = 256M/g" ${php_conf} \
+    && sed -i -e "s/max_input_time\s*=\s*.*/max_input_time = 300/g" ${php_conf} \
+    && sed -i -e "s/max_execution_time\s*=\s*.*/max_execution_time = 300/g" ${php_conf} \
     && sed -i -e "s/upload_max_filesize\s*=\s*2M/upload_max_filesize = 100M/g" ${php_conf} \
     && sed -i -e "s/post_max_size\s*=\s*8M/post_max_size = 100M/g" ${php_conf} \
     && sed -i -e "s/variables_order = \"GPCS\"/variables_order = \"EGPCS\"/g" ${php_conf} \
     && sed -i -e "s/;daemonize\s*=\s*yes/daemonize = no/g" /etc/php/7.3/fpm/php-fpm.conf \
     && sed -i -e "s/;catch_workers_output\s*=\s*yes/catch_workers_output = yes/g" ${fpm_conf} \
-    && sed -i -e "s/pm.max_children = 5/pm.max_children = 4/g" ${fpm_conf} \
-    && sed -i -e "s/pm.start_servers = 2/pm.start_servers = 3/g" ${fpm_conf} \
-    && sed -i -e "s/pm.min_spare_servers = 1/pm.min_spare_servers = 2/g" ${fpm_conf} \
+    && sed -i -e "s/pm.max_children = 5/pm.max_children = 30/g" ${fpm_conf} \
+    && sed -i -e "s/pm.start_servers = 2/pm.start_servers = 14/g" ${fpm_conf} \
+    && sed -i -e "s/pm.min_spare_servers = 1/pm.min_spare_servers = 10/g" ${fpm_conf} \
     && sed -i -e "s/pm.max_spare_servers = 3/pm.max_spare_servers = 4/g" ${fpm_conf} \
     && sed -i -e "s/pm.max_requests = 500/pm.max_requests = 200/g" ${fpm_conf} \
     && sed -i -e "s/www-data/nginx/g" ${fpm_conf} \
