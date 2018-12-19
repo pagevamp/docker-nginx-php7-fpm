@@ -63,7 +63,7 @@ RUN apt-get update \
     && sed -i -e "s/pm.max_children = 5/pm.max_children = 30/g" ${fpm_conf} \
     && sed -i -e "s/pm.start_servers = 2/pm.start_servers = 14/g" ${fpm_conf} \
     && sed -i -e "s/pm.min_spare_servers = 1/pm.min_spare_servers = 10/g" ${fpm_conf} \
-    && sed -i -e "s/pm.max_spare_servers = 3/pm.max_spare_servers = 4/g" ${fpm_conf} \
+    && sed -i -e "s/pm.max_spare_servers = 3/pm.max_spare_servers = 14/g" ${fpm_conf} \
     && sed -i -e "s/pm.max_requests = 500/pm.max_requests = 200/g" ${fpm_conf} \
     && sed -i -e "s/www-data/nginx/g" ${fpm_conf} \
     && sed -i -e "s/^;clear_env = no$/clear_env = no/" ${fpm_conf} \
