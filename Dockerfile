@@ -48,6 +48,7 @@ RUN apt-get update \
             php7.3-intl \
             php7.3-xml \
             php-mongodb \
+	    git \
     && mkdir -p /run/php \
     && echo "#!/bin/sh\nexit 0" > /usr/sbin/policy-rc.d \
     && rm -rf /etc/nginx/conf.d/* \
