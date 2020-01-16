@@ -3,9 +3,9 @@ FROM debian:stretch
 # Let the container know that there is no tty
 ENV DEBIAN_FRONTEND noninteractive
 ENV NGINX_VERSION 1.15.7-1~stretch
-ENV php_conf /etc/php/7.3/fpm/php.ini
-ENV fpm_conf /etc/php/7.3/fpm/pool.d/www.conf
-ENV COMPOSER_VERSION 1.7.3
+ENV php_conf /etc/php/7.4/fpm/php.ini
+ENV fpm_conf /etc/php/7.4/fpm/pool.d/www.conf
+ENV COMPOSER_VERSION 1.9.2
 
 # Install Basic Requirements
 RUN apt-get update \
@@ -34,19 +34,19 @@ RUN apt-get update \
             supervisor \
             unzip \
             nginx=${NGINX_VERSION} \
-            php7.3-fpm \
-            php7.3-bcmath \
-            php7.3-dev \
-            php7.3-common \
-            php7.3-json \
-            php7.3-mbstring \
-            php7.3-curl \
-            php7.3-gd \
-            php7.3-mysql \
-            php7.3-zip \
-            php7.3-pgsql \
-            php7.3-intl \
-            php7.3-xml \
+            php7.4-fpm \
+            php7.4-bcmath \
+            php7.4-dev \
+            php7.4-common \
+            php7.4-json \
+            php7.4-mbstring \
+            php7.4-curl \
+            php7.4-gd \
+            php7.4-mysql \
+            php7.4-zip \
+            php7.4-pgsql \
+            php7.4-intl \
+            php7.4-xml \
             php-mongodb \
 	    git \
     && mkdir -p /run/php \
@@ -59,7 +59,7 @@ RUN apt-get update \
     && sed -i -e "s/upload_max_filesize\s*=\s*2M/upload_max_filesize = 100M/g" ${php_conf} \
     && sed -i -e "s/post_max_size\s*=\s*8M/post_max_size = 100M/g" ${php_conf} \
     && sed -i -e "s/variables_order = \"GPCS\"/variables_order = \"EGPCS\"/g" ${php_conf} \
-    && sed -i -e "s/;daemonize\s*=\s*yes/daemonize = no/g" /etc/php/7.3/fpm/php-fpm.conf \
+    && sed -i -e "s/;daemonize\s*=\s*yes/daemonize = no/g" /etc/php/7.4/fpm/php-fpm.conf \
     && sed -i -e "s/;catch_workers_output\s*=\s*yes/catch_workers_output = yes/g" ${fpm_conf} \
     && sed -i -e "s/pm.max_children = 5/pm.max_children = 30/g" ${fpm_conf} \
     && sed -i -e "s/pm.start_servers = 2/pm.start_servers = 14/g" ${fpm_conf} \
