@@ -48,6 +48,7 @@ RUN apt-get update \
             php7.4-intl \
             php7.4-xml \
             php-mongodb \
+	    php-sqlite3 \
 	    git \
     && mkdir -p /run/php \
     && echo "#!/bin/sh\nexit 0" > /usr/sbin/policy-rc.d \
